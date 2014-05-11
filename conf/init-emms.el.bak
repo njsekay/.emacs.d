@@ -1,0 +1,125 @@
+;; -*- Mode: Emacs-Lisp ; Coding: utf-8 -*-
+
+;; (require 'emms-setup)
+;; (require 'emms-i18n)
+;; (emms-standard)
+;; (emms-default-players)
+;; (setq emms-repeat-playlist t)
+;; ;; (setq emms-player-list '(emms-player-mplayer))
+;; ;; (setq emms-source-file-default-directory "/treasure/music/")
+
+;; (require 'emms-player-mpd)
+;; (setq emms-player-mpd-server-name "localhost")
+;; (setq emms-player-mpd-server-port "6600")
+;; (add-to-list 'emms-info-functions 'emms-info-mpd)
+;; (add-to-list 'emms-player-list 'emms-player-mpd)
+
+;; (require 'emms-volume)
+;; (setq emms-volume-change-function 'emms-volume-mpd-change)
+
+
+;; Initialize
+(require 'emms)
+(require 'emms-info)
+(require 'emms-player-mpd)
+(require 'emms-playing-time)
+(require 'emms-playlist-mode)
+(require 'emms-streams)
+(require 'emms-volume)
+
+(emms-playing-time 1)
+
+;; The name of emms-playlist-mode is *way* too long
+(add-hook 'emms-playlist-mode-hook
+          #'(lambda ()
+              (setq mode-name "EMMS")))
+
+;;; Utilities
+
+(defun my-start-mpd ()
+  "Start MPD and sync to its playlist."
+  (interactive)
+  (shell-command "mpd /etc/mpd.conf")
+  (emms-player-mpd-connect)
+  (switch-to-buffer emms-playlist-buffer))
+
+(defun my-stop-mpd ()
+  "Stop MPD."
+  (interactive)
+  (shell-command "mpd --kill /etc/mpd.conf")
+  (emms-playlist-current-kill)
+  (emms-player-mpd-disconnect))
+
+;; Switch to the radio buffer
+(defun my-emms-streams ()
+  (interactive)
+  (let ((buf (get-buffer emms-stream-buffer-name)))
+    (if buf
+        (switch-to-buffer buf)
+      (emms-streams))))
+
+;; Switch to either the radio buffer or the current EMMS playlist
+(defun my-emms-switch-to-current-playlist ()
+  (interactive)
+  (if (and (boundp 'emms-stream-playlist-buffer)
+           (eq emms-stream-playlist-buffer emms-playlist-buffer))
+      (switch-to-buffer emms-stream-buffer-name)
+    (if (or (null emms-playlist-buffer)
+            (not (buffer-live-p emms-playlist-buffer)))
+        (error "No current Emms buffer")
+      (switch-to-buffer emms-playlist-buffer))))
+
+;;; Key customizations
+
+(define-key emms-playlist-mode-map "q" 'emms-playlist-current-kill)
+(define-key emms-playlist-mode-map (kbd "SPC") 'emms-pause)
+;; this is the "O" button on the gamepad
+(define-key emms-playlist-mode-map (kbd "<prior>") 'emms-player-mpd-previous)
+;; this is the "X" button on the gamepad
+(define-key emms-playlist-mode-map (kbd "<next>") 'emms-player-mpd-next)
+
+;; this is the largest dot on the top row, in the middle section
+(global-set-key (kbd "<f8>") 'my-start-mpd)
+;; this is the smallest dot on the top row, in the middle section
+(global-set-key (kbd "<f5>") 'my-stop-mpd)
+;; this is the check-mark button on the gamepad
+(global-set-key (kbd "<select>") 'emms-pause)
+
+(global-set-key "\C-cm" nil)
+(global-set-key "\C-cm " 'emms-pause)
+(global-set-key "\C-cm0" 'emms-playlist-current-clear)
+(global-set-key "\C-cmc" 'emms-player-mpd-connect)
+(global-set-key "\C-cmn" 'emms-player-mpd-next)
+(global-set-key "\C-cmo" 'my-emms-switch-to-current-playlist)
+(global-set-key "\C-cmp" 'emms-player-mpd-previous)
+(global-set-key "\C-cmq" 'emms-stop)
+(global-set-key "\C-cmQ" #'(lambda () (interactive) (emms-player-mpd-clear)))
+(global-set-key "\C-cmr" 'my-emms-streams)
+(global-set-key "\C-cms" 'emms-seek)
+(global-set-key "\C-cm-" 'emms-volume-mode-minus)
+(global-set-key "\C-cm+" 'emms-volume-mode-plus)
+(global-set-key "\C-cm\C-c" 'my-emms-reset-cache)
+
+;;; Custom variables
+
+(custom-set-variables
+ '(emms-cache-file "~/.emacs.d/.emms-cache")
+ '(emms-info-asynchronously nil)
+ '(emms-info-functions (quote (emms-info-mpd)))
+ '(emms-player-list (quote (emms-player-mpd)))
+ '(emms-player-mpd-music-directory "/treasure/music")
+ '(emms-playlist-buffer-name "*EMMS Playlist*")
+ '(emms-playlist-default-major-mode (quote emms-playlist-mode))
+ '(emms-playlist-mode-open-playlists t)
+ '(emms-stream-default-action "play")
+ '(emms-volume-change-function (quote emms-volume-mpd-change)))
+(custom-set-faces)
+
+;;; Initialization
+
+(define-emms-combined-source all nil
+  '((emms-source-directory "/treasure/music")))
+
+;; Type M-x emms-add-all to add all music in your ~/Music directory.
+
+;;; emms-init.el ends here

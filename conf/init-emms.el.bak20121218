@@ -1,0 +1,160 @@
+(define-key mode-specific-map (kbd "C-c S-s") 'my-start-player)
+(require 'emms-source-file)
+(require 'emms-player-mpd)
+(require 'emms-playing-time)
+(require 'emms-playlist-mode)
+(require 'emms-mode-line-icon)
+(require 'emms-streams)
+(require 'emms-stream-info)
+(require 'emms-volume)
+
+
+;; (setq exec-path (append exec-path '("/usr/local/bin")))
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/emms/lisp")
+(require 'emms-setup)
+(require 'emms-player-mplayer)
+(emms-standard)
+(emms-default-players)
+
+
+
+
+(require 'emms-setup)
+(emms-devel)
+(emms-mode-line 1)
+(emms-playing-time 1)
+
+(setq emms-repeat-playlist t)
+(setq emms-player-list '(emms-player-mplayer))
+
+(emms-player-set emms-player-mpd 'regex
+                 "\\.ogg\\|\\.mp3\\|\\.wma\\|\\.ogm\\|\\.asf\\|\\.mkv\\|http://\\|mms://\\|\\.rmvb\\|\\.flac\\|\\.vob\\|\\.m4a\\|\\.ape\\|\\.mpc")
+(emms-player-set emms-player-mplayer 'regex
+                 "\\.wav\\|\\.pls+\\|\\.mpg\\|\\.mpeg\\|\\.wmv\\|\\.wma\\|\\.mov\\|\\.avi\\|\\.divx\\|\\.ogm\\|\\.asf\\|\\.mkv\\|.rm\\|\\.rmvb\\|\\.mp4|\\.rm")
+
+(define-emms-simple-player mplayer '(file url)
+      (regexp-opt '(".ogg" ".mp3" ".wav" ".mpg" ".mpeg" ".wmv" ".wma"
+                    ".mov" ".avi" ".divx" ".ogm" ".asf" ".mkv" "http://" "mms://"
+                    ".rm" ".rmvb" ".mp4" ".flac" ".vob" ".m4a" ".flv" ".ogv" ".pls"))
+      "mplayer" "-slave" "-quiet" "-really-quiet" "-fullscreen")
+
+(define-emms-combined-source all nil
+  '((emms-source-directory emms-source-file-default-directory)))
+
+(setq emms-playlist-buffer-name "*Music*")
+;; (setq emms-playlist-buffer "mpd")
+
+;;;###autoload
+(defun rgr/track-search()
+  (interactive)
+  (anything (list anything-c-source-emms-file anything-c-source-emms-directory anything-c-source-emms-playlist)  nil  "Video or even some music Sir? ")
+  )
+
+(defadvice rgr/track-search (after rgr/track-search) (run-at-time "2 sec" nil 'emms-player-mpd-connect))
+
+
+;;(add-hook 'emms-player-started-hook 'emms-player-mpd-connect)
+(setq emms-show-format "EMMS is now playing : %s")
+
+;; get list back from mpd for proper formatting
+;; (defadvice emms-play-file (after emms-play-file activate)
+;;     (emms-player-mpd-connect))
+
+                                        ; (emms-lyrics 1)
+                                        ; (emms-lyrics-ena1ble)
+
+(emms-playing-time 1)
+(emms-mode-line 1)
+
+(require 'emms-extension)
+(ad-unadvise 'emms-play-directory-tree)
+
+(define-key mode-specific-map (kbd "e q") 'my-stop-player)
+
+(define-key mode-specific-map (kbd "e D") 'emms-mode-line-toggle)
+
+(define-key mode-specific-map (kbd "e R") 'my-emms-streams)
+
+(define-key mode-specific-map (kbd "e c") 'emms-playlist-current-clear)
+
+(define-key mode-specific-map (kbd "e d") (lambda() (interactive)(emms-play-dired)(my-start-player)))
+(define-key mode-specific-map (kbd "e a") 'emms-add-dired)
+(define-key mode-specific-map (kbd "e m") 'emms-play-matching)
+(define-key mode-specific-map (kbd "e f") 'emms-add-find)
+(define-key mode-specific-map (kbd "e b") 'emms-browser)
+(define-key mode-specific-map (kbd "e s") 'emms-smart-browse)
+
+(define-key mode-specific-map (kbd "e j") 'emms-seek)
+(define-key mode-specific-map (kbd "e <right>") (lambda()(interactive)(emms-seek 30)))
+(define-key mode-specific-map (kbd "e <left>") (lambda()(interactive)(emms-seek -15)))
+
+(define-key mode-specific-map (kbd "e l") 'my-emms-switch-to-current-playlist)
+(define-key mode-specific-map (kbd "e L") 'emms-play-playlist)
+
+(define-key mode-specific-map (kbd "e n") 'emms-next)
+(define-key mode-specific-map (kbd "e p") 'emms-previous)
+
+(define-key mode-specific-map (kbd "e +") 'emms-volume-raise)
+(define-key mode-specific-map (kbd "e -") 'emms-volume-lower)
+
+(define-key mode-specific-map (kbd "e r") 'emms-random)
+
+(define-key mode-specific-map (kbd "e <SPC>") 'emms-pause)
+
+(global-set-key "\C-xM" 'de-add-dir)
+
+(defun my-emms-info-track-description (track)
+  "Return a description of the current track."
+  (if (and (emms-track-get track 'info-artist)
+           (emms-track-get track 'info-title))
+      (let ((pmin (emms-track-get track 'info-playing-time-min))
+            (psec (emms-track-get track 'info-playing-time-sec))
+            (ptot (emms-track-get track 'info-playing-time))
+            (art  (emms-track-get track 'info-artist))
+            (tit  (emms-track-get track 'info-title)))
+        (cond ((and pmin psec) (format "%s - %s " art tit ))
+              (ptot (format  "%s - %s " art tit ))
+              (t (emms-track-simple-description track))))))
+
+(defun my-stop-player ()
+  "Stop emms player."
+  (interactive)
+  (shell-command "mpd --kill")
+  (emms-playlist-current-kill)
+  (emms-player-mpd-disconnect))
+
+;; Switch to the radio buffer
+(defun my-emms-streams ()
+  (interactive)
+  (my-start-player)
+  (let ((buf (get-buffer emms-stream-buffer-name)))
+    (if buf
+        (switch-to-buffer buf)
+      (emms-streams))))
+
+;; Switch to either the radio buffer or the current EMMS playlist
+(defun my-emms-switch-to-current-playlist ()
+  (interactive)
+  (if (and (boundp 'emms-stream-playlist-buffer)
+           (eq emms-stream-playlist-buffer emms-playlist-buffer))
+      (switch-to-buffer emms-stream-buffer-name)
+    (if (or (null emms-playlist-buffer)
+            (not (buffer-live-p emms-playlist-buffer)))
+        (error "No current Emms buffer")
+      (switch-to-buffer emms-playlist-buffer))))
+
+
+(defun my-start-player ()
+  "Start MPD and sync to its playlistemms player."
+  (interactive)
+  (shell-command "mpd") ; uses default ~/.mpdconf
+  (emms-player-mpd-connect)
+  (switch-to-buffer emms-playlist-buffer)
+  (global-set-key (kbd "<M-f1>")   'rgr/track-search)
+  )
+
+
+(defun de-add-dir ()
+  (interactive)
+  (call-interactively 'emms-add-directory-tree)
+  (emms-playlist-mode-go))

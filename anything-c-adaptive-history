@@ -1,0 +1,61 @@
+;; -*- mode: emacs-lisp -*-
+;; History entries used for anything adaptive display.
+(setq anything-c-adaptive-history (quote (("Commands" ("install-elisp" ("install-elisp" . 1))) (nil (nil (#("install-elisp-from-emacswiki recentf-ext.el" 42 43 (rear-nonsticky t)) . 1) (".emacs.el" . 1))) ("Kill Ring" (#("njunichiro" 0 9 (selection-face nil candidate-face nil action nil fontified t face font-lock-string-face) 9 10 (selection-face nil candidate-face nil action nil rear-nonsticky t fontified t face font-lock-string-face)) ("" . 1)) (#("auto-save-buffers" 0 17 (face my-face-elisp-macro fontified t)) ("" . 1)) (#("(require 'browse-kill-ring)" 0 1 (fontified t) 1 8 (fontified t face my-face-elisp-subr) 8 10 (fontified t) 10 26 (fontified t face my-face-elisp-macro) 26 27 (fontified t)) ("" . 1)) (#(";; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ; html-helper-mode
+;; (setq load-path (cons \"~/data/elisp/html-helper\" load-path))
+;; ;; (setq load-path (cons \"~/data/elisp/\" load-path))
+;; (autoload 'html-helper-mode \"html-helper-mode\")
+
+;; (declare (special html-helper-do-write-file-hooks
+;;                   html-helper-build-new-buffer
+;;                   html-helper-address-string
+;;                   html-helper-new-buffer-template))
+;; ;;; Config:
+;; (setq  html-helper-do-write-file-hooks t)
+;; (setq  html-helper-build-new-buffer t )
+
+;; ;;; personal settings:
+;; (setq html-helper-who-am-i \"J. Nakamura\")
+;; (setq html-helper-my-net-address \"njunichiro@gmail.com\")
+
+;; (setq  html-helper-address-string
+;;        (format \"<A href=\\\"mailto:%s\\\">Email: %s</a>\"
+;;                html-helper-my-net-address html-helper-who-am-i))
+
+
+
+;; (setq  html-helper-new-buffer-template
+;;        '(\"<html>\\n\"
+;;          \"<!--$Id: html-helper-prepare.el,v 1.2 2006/10/21 01:19:45 raman Exp $ -->\\n\"
+;;          \"  <head>\\n\"
+;;          \"<LINK REV=MADE HREF=\\\"mailto:tvraman@us.ibm.com\\\">\\n\"
+;;          \"<title>\" p \"</title>\\n\"
+;;          \"</head>\\n\\n\"
+;;          \"<body>\\n\"
+;;          \"<h1>\" p \"</h1>\\n\\n\"
+;;          p
+;;          \"\\n\\n<hr>\\n\"
+;;          \"<address>\" html-helper-address-string \"</address>\\n\"
+;;          html-helper-timestamp-start
+;;          html-helper-timestamp-end
+;;          \"\\n</body>\\n </html>\\n\"))
+
+;; (add-hook 'html-helper-mode-hook
+;;           (function (lambda ()
+;;                       (auto-fill-mode 1)
+;; ;;                       (require 'html-addons))
+;;                       ;で、ASPを使う人は、次の2つが必要です。
+;;                       (setq html-helper-mode-uses-visual-basic t)
+;;                       (setq html-helper-mode-global-JSP-not-ASP nil)
+;;                       (setq html-helper-basic-offset 4)
+;;                       (setq html-helper-item-continue-indent 5)
+;;                       (setq html-helper-never-indent nil))))
+;; ;; (require 'html-outline)
+
+
+
+" 0 3 (face font-lock-comment-delimiter-face fontified t) 3 57 (face font-lock-comment-face fontified t) 57 60 (face font-lock-comment-delimiter-face fontified t) 60 79 (face font-lock-comment-face fontified t) 79 82 (fontified t face font-lock-comment-delimiter-face) 82 143 (fontified t face font-lock-comment-face) 143 146 (face font-lock-comment-delimiter-face fontified t) 146 199 (face font-lock-comment-face fontified t) 199 202 (fontified t face font-lock-comment-delimiter-face) 202 250 (fontified t face font-lock-comment-face) 250 251 (fontified t) 251 254 (fontified t face font-lock-comment-delimiter-face) 254 304 (fontified t face font-lock-comment-face) 304 325 (face font-lock-comment-delimiter-face fontified t) 325 354 (face font-lock-comment-face fontified t) 354 375 (fontified t face font-lock-comment-delimiter-face) 375 402 (fontified t face font-lock-comment-face) 402 423 (face font-lock-comment-delimiter-face fontified t) 423 457 (face font-lock-comment-face fontified t) 457 460 (fontified t face font-lock-comment-delimiter-face) 460 472 (fontified t face font-lock-comment-face) 472 475 (face font-lock-comment-delimiter-face fontified t) 475 517 (face font-lock-comment-face fontified t) 517 520 (fontified t face font-lock-comment-delimiter-face) 520 560 (fontified t face font-lock-comment-face) 560 561 (fontified t) 561 564 (fontified t face font-lock-comment-delimiter-face) 564 587 (fontified t face font-lock-comment-face) 587 590 (face font-lock-comment-delimiter-face fontified t) 590 632 (face font-lock-comment-face fontified t) 632 635 (fontified t face font-lock-comment-delimiter-face) 635 692 (fontified t face font-lock-comment-face) 692 693 (fontified t) 693 696 (fontified t face font-lock-comment-delimiter-face) 696 730 (fontified t face font-lock-comment-face) 730 740 (face font-lock-comment-delimiter-face fontified t) 740 786 (face font-lock-comment-face fontified t) 786 804 (fontified t face font-lock-comment-delimiter-face) 804 854 (fontified t face font-lock-comment-face) 854 855 (fontified t) 855 856 (fontified t) 856 857 (fontified t) 857 860 (fontified t face font-lock-comment-delimiter-face) 860 899 (fontified t face font-lock-comment-face) 899 909 (face font-lock-comment-delimiter-face fontified t) 909 922 (face font-lock-comment-face fontified t) 922 934 (fontified t face font-lock-comment-delimiter-face) 934 1012 (fontified t face font-lock-comment-face) 1012 1024 (face font-lock-comment-delimiter-face fontified t) 1024 1037 (face font-lock-comment-face fontified t) 1037 1049 (fontified t face font-lock-comment-delimiter-face) 1049 1104 (fontified t face font-lock-comment-face) 1104 1116 (face font-lock-comment-delimiter-face fontified t) 1116 1141 (face font-lock-comment-face fontified t) 1141 1153 (fontified t face font-lock-comment-delimiter-face) 1153 1167 (fontified t face font-lock-comment-face) 1167 1179 (face font-lock-comment-delimiter-face fontified t) 1179 1190 (face font-lock-comment-face fontified t) 1190 1202 (fontified t face font-lock-comment-delimiter-face) 1202 1223 (fontified t face font-lock-comment-face) 1223 1235 (face font-lock-comment-delimiter-face fontified t) 1235 1237 (face font-lock-comment-face fontified t) 1237 1249 (fontified t face font-lock-comment-delimiter-face) 1249 1262 (fontified t face font-lock-comment-face) 1262 1274 (face font-lock-comment-delimiter-face fontified t) 1274 1328 (face font-lock-comment-face fontified t) 1328 1340 (fontified t face font-lock-comment-delimiter-face) 1340 1368 (fontified t face font-lock-comment-face) 1368 1380 (face font-lock-comment-delimiter-face fontified t) 1380 1406 (face font-lock-comment-face fontified t) 1406 1418 (fontified t face font-lock-comment-delimiter-face) 1418 1444 (fontified t face font-lock-comment-face) 1444 1445 (fontified t) 1445 1448 (fontified t face font-lock-comment-delimiter-face) 1448 1481 (fontified t face font-lock-comment-face) 1481 1494 (face font-lock-comment-delimiter-face fontified t) 1494 1515 (face font-lock-comment-face fontified t) 1515 1540 (fontified t face font-lock-comment-delimiter-face) 1540 1559 (fontified t face font-lock-comment-face) 1559 1562 (face font-lock-comment-delimiter-face fontified t) 1562 1611 (face font-lock-comment-face fontified t) 1611 1636 (fontified t face font-lock-comment-delimiter-face) 1636 1659 (fontified t face font-lock-comment-face) 1659 1684 (face font-lock-comment-delimiter-face fontified t) 1684 1728 (face font-lock-comment-face fontified t) 1728 1753 (fontified t face font-lock-comment-delimiter-face) 1753 1800 (fontified t face font-lock-comment-face) 1800 1825 (face font-lock-comment-delimiter-face fontified t) 1825 1859 (face font-lock-comment-face fontified t) 1859 1884 (fontified t face font-lock-comment-delimiter-face) 1884 1926 (fontified t face font-lock-comment-face) 1926 1951 (face font-lock-comment-delimiter-face fontified t) 1951 1990 (face font-lock-comment-face fontified t) 1990 1993 (fontified t face font-lock-comment-delimiter-face) 1993 2020 (fontified t face font-lock-comment-face) 2020 2021 (fontified t) 2021 2022 (fontified t) 2022 2023 (fontified t)) ("declare" . 1)) (#("  dfasdlkfjlsdkfj" 0 16 (fontified t) 16 17 (fontified t syntax-table nil)) ("" . 1)) (#("  def
+    @post = Post.
+  end
+  
+" 0 1 (fontified t) 1 2 (fontified t) 2 3 (face font-lock-keyword-face fontified t) 3 4 (face font-lock-keyword-face fontified t) 4 5 (face font-lock-keyword-face syntax-table nil fontified t) 5 6 (fontified t) 6 9 (fontified t) 9 10 (fontified t) 10 11 (face font-lock-variable-name-face fontified t) 11 12 (face font-lock-variable-name-face fontified t) 12 13 (face font-lock-variable-name-face fontified t) 13 14 (face font-lock-variable-name-face fontified t) 14 15 (face font-lock-variable-name-face fontified t) 15 16 (fontified t) 16 17 (fontified t) 17 18 (fontified t) 18 19 (face font-lock-type-face fontified t) 19 20 (face font-lock-type-face fontified t) 20 21 (face font-lock-type-face fontified t) 21 22 (face font-lock-type-face fontified t) 22 23 (syntax-table nil fontified t) 23 24 (fontified t) 24 26 (fontified t) 26 28 (fontified t face font-lock-keyword-face) 28 29 (fontified t syntax-table nil face font-lock-keyword-face) 29 30 (fontified t) 30 31 (face (my-face-u-1) fontified t) 31 32 (face (my-face-u-1) syntax-table nil fontified t) 32 33 (fontified t action nil candidate-face nil selection-face nil)) ("" . 1))) ("Auto Complete" (#("repository-directory" 0 20 (action nil face nil candidate-face nil selection-face nil)) ("" . 1))) (buffer (#("*Ibuffer*" 0 9 (face italic)) ("" . 2)) (#(".emacs.el" 0 9 (help-echo "/home/andjuny/.emacs.el" face font-lock-type-face)) (".emacs.el" . 1) ("" . 1)) (#("*scratch*" 0 9 (face italic)) ("" . 2)) (#("posts_controller.rb" 0 19 (help-echo "/home/andjuny/work/rails/blog_app/app/controllers/posts_controller.rb" face font-lock-type-face)) ("" . 1)) (#(".emacs.d" 0 8 (face anything-dir-priv help-echo "/home/andjuny/.emacs.d/")) ("" . 1)) (#(".zshrc" 0 6 (face font-lock-type-face help-echo "/home/andjuny/.zshrc")) (".zshrc" . 1)) (#("clmemo.txt" 0 10 (help-echo "/home/andjuny/data/personal/memo/clmemo.txt" face font-lock-type-face)) ("clmemo" . 1))) (command ("install-elisp" ("install-elisp" . 1)) ("moccur-grep" ("moccur" . 1)) ("anything" ("anythi" . 1))) (file ("/home/andjuny/.emacs.el" (".emacs.el" . 34) (".emacs." . 2) ("~/.emacs" . 1)) ("/home/andjuny/.mew.el" (".mew.el" . 8) ("." . 1) (".mew" . 2)) ("/home/andjuny/.Xresources" (".xres" . 1)) ("/home/andjuny/.emacs.d/elisp/color-moccur.el" ("mocc" . 1)) ("~/work/ruby/test.rb" ("" . 1)) (".zshrc" (".zshrc" . 1)) ("/home/andjuny/data/personal/memo/clmemo.txt" ("clmemo" . 1)) ("~/work/rails/depot/public/images/" ("work/rails/depot/" . 1)) ("/home/andjuny/work/rails/squarenet/app/views/layouts/entries.html.erb" ("squarenet" . 1)) ("/home/andjuny/work/ruby/test.rb" ("work/ruby/te" . 1) ("work/ruby" . 1)) ("/usr/local/share/emacs/site-lisp" ("/usr/local/share/emacs" . 1)) (".emacs.el" (".emacs.el" . 2)) ("anything-kyr.el" ("" . 1)) ("/home/andjuny/.emacs.d/elisp/anything-kyr.el" ("" . 1))))))

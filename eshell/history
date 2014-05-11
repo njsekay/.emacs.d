@@ -1,0 +1,58 @@
+echo $SHELL
+ruby -v
+gvfs-mount -l
+gnome-terminal
+gvfs-mount -l
+aptitude update
+sudo aptitude dist-upgrade
+ncmpcpp
+sudo wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
+gnome-terminal&
+nvm
+r
+nvm
+. ~/.nvm/nvm.sh 
+cd Pictures/
+cd ..
+pwd
+pwd
+pwd
+gnome-terminal
+sudo aptitude update
+sudo aptitude update
+sudo ls
+sudo aptitude update
+ls
+sudo Xorg -configure
+sudo aptitude remove nvidia-current
+sudo aptitude install nvidia-current
+sudo lshw
+sudo lshw | more
+ls
+sudo aptitude update
+sudo aptitude dist-upgrade
+which rbenv
+sudo aptitude search the_silver_searcher
+sudo aptitude search ag
+ls
+sudo add-apt-repository ppa:pgolm/the-silver-searcher
+rbenv
+ruby -version
+rails -v
+ls
+rails -v
+rbenv
+gem
+rails -v
+sudo aptitude update
+sudo aptitude dist-upgrade
+rbenv install -l
+ruby -v
+gem list
+which gem
+gem -v
+gem update --system
+gem update
+rbenv list -l
+rbenv install -l
+exit

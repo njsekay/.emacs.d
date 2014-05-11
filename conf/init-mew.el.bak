@@ -1,0 +1,181 @@
+;; -*- Mode: Emacs-Lisp ; Coding: utf-8 -*-
+
+(autoload 'mew "mew" nil t)
+(autoload 'mew-send "mew" nil t)
+
+(setq mew-demo nil)
+
+;; Optional setup (Read Mail menu for Emacs 21):
+(if (boundp 'read-mail-command)
+    (setq read-mail-command 'mew))
+
+;; Optional setup (e.g. C-xm for sending a message):
+(autoload 'mew-user-agent-compose "mew" nil t)
+(if (boundp 'mail-user-agent)
+    (setq mail-user-agent 'mew-user-agent))
+(if (fboundp 'define-mail-user-agent)
+    (define-mail-user-agent
+      'mew-user-agent
+      'mew-user-agent-compose
+      'mew-draft-send-message
+      'mew-draft-kill
+      'mew-send-hook))
+
+
+;; 起動時にメールを取りにいかないようにする
+(setq mew-auto-get nil)
+(put 'upcase-region 'disabled nil)
+
+(setq mew-window-use-full t)
+
+;;; Mew の起動時にはメールを取得しないようにする設定
+(setq mew-auto-get nil)
+
+;;; メールの取得後、POPサーバにあるメールを残す設定
+(setq mew-pop-delete nil)
+
+;;; 複数のメールサーバを使うための設定
+(setq mew-config-alist
+        '(
+          ("gmail"
+           ("mew-proto"         . "%")
+           ("imap-server"       . "imap.gmail.com")
+           ("imap-ssl"          . t)
+           ("imap-ssl-port"     . "993")
+           ("imap-user"         . "njunichiro@gmail.com")
+           ("imap-auth"         . t)
+           ("imap-delete"       . nil)
+           ("imap-trash-folder" . "%trash"))
+          ))
+;; (setq mew-config-alist '(
+;;           ("gmail"
+;;           ("pop-ssl"      . t)
+;;           ("pop-ssl-port" . "995")
+;;           ("pop-auth"    . pass)
+;;           ("inbox-folder" . "+inbox-gmail")
+;;           ("name"        . "njunichiro") 
+;;           ("user"        . "njunichiro")
+;;           ("mail-domain" . "gmail.com")
+;;           ("pop-user"    . "njunichiro@gmail.com")
+;;           ("pop-server"  . "pop.gmail.com")
+;;           ("smtp-ssl"     . t)
+;;           ("smtp-ssl-port" . "465")
+;;           ("smtp-user"    . "njunichiro@gmail.com")
+;;           ("smtp-server" . "smtp.gmail.com"))
+;;           ))
+
+(setq mew-prog-ssl "/usr/bin/stunnel")
+
+(setq mew-use-cached-passwd t) ; （デフォルトは20分）
+(setq mew-passwd-timer-unit 60) ; 毎回PW入力は面倒なので，5分だけ．ノートPCだからいいか（？）．
+
+;; Gmail (IMAP) の設定
+;; (setq mew-proto "%")
+;; (setq mew-user "njunichiro")
+;; (setq mew-mail-domain "gmail.com")
+
+;; (setq mew-imap-server "imap.gmail.com")
+;; (setq mew-imap-user "njunichiro@gmail.com")
+;; (setq mew-imap-auth t)
+;; (setq mew-imap-delete nil)
+;; (setq mew-imap-ssl t)
+;; (setq mew-imap-ssl-port "993")
+
+;; (setq mew-smtp-auth t)
+;; (setq mew-smtp-ssl t)
+;; (setq mew-smtp-ssl-port "465")
+;; (setq mew-smtp-user "njunichiro@gmail.com")
+;; (setq mew-smtp-server "smtp.gmail.com")
+
+
+
+;; (setq mew-config-alist
+;;       '(
+;; ;;         ("default"
+;; ;;          ("name" . "junnon6") ;; (user-full-name)
+;; ;;          ("user" . "xxx") ;; (user-login-name)
+;; ;;          ("mail-domain" . "xxx.jp")
+;; ;;          ("prog-ssl" . "/usr/sbin/stunnel")
+;; ;;          ("ssl-verify-level" . 2)
+;; ;;          ("smtp-ssl" . t)
+;; ;;          ("smtp-server" . "xxx.jp")
+;; ;;          ("smtp-ssl-port" . "465")              ; "SMTP over SSL/TLS" or 587
+;; ;;          ("use-smtp-auth" . t)
+;; ;;          ("smtp-auth-list" . ("CRAM-MD5" "DIGEST-MD5" "PLAIN" "LOGIN"))
+;; ;;          ("smtp-user" . "xxx")
+;; ;;          ("imap-ssl" . t)
+;; ;;          ("imap-server" . "xxx.jp")
+;; ;;          ("imap-ssl-port" . "993")              ; "IMAP over SSL/TLS"
+;; ;;          ("imap-user" . "xxx")   ;; (user-login-name)
+;; ;;          ("imap-auth" . t)
+;; ;;          ("imap-auth-list" . ("CRAM-MD5" "LOGIN"))
+;; ;;          ("imap-delete" . nil)
+;; ;; ;        ("imap-size" . 0)              ; (* 54 1024)
+;; ;; ;        ("imap-header-only" . t)
+;; ;;          ("mailbox-type" . imap)                ; 'pop or 'mbox
+;; ;;          ("fcc" . "+inbox")
+;; ;;          )
+;;         ("gmail"
+;;          ("name" . "junnon6") ;; (user-full-name)
+;;          ("user" . "njunichiro") ;; (user-login-name)
+;;          ("mail-domain"   . "gmail.com")
+;;          ("prog-ssl" . "/usr/sbin/stunnel")
+;;          ("ssl-verify-level" . 2)
+;;          ("smtp-ssl" . t)
+;;          ("smtp-server" . "smtp.gmail.com")
+;;          ("smtp-ssl-port" . "465")              ; "SMTP over SSL/TLS" or 587
+;;          ("use-smtp-auth" . t)
+;;          ("smtp-auth-list" . ("CRAM-MD5" "DIGEST-MD5" "PLAIN" "LOGIN"))
+;;          ("smtp-user" . "njunichiro@gmail.com")
+;;          ("imap-ssl" . t)
+;;          ("imap-server" . "imap.gmail.com")
+;;          ("imap-ssl-port" . "993")              ; "IMAP over SSL/TLS"
+;;          ("imap-user" . "njunichiro@gmail.com")   ;; (user-login-name)
+;;          ("imap-auth" . t)
+;;          ("imap-auth-list" . ("CRAM-MD5" "LOGIN"))
+;;          ("imap-delete" . nil)
+;; ;        ("imap-size" . 0)              ; (* 54 1024)
+;; ;        ("imap-header-only" . t)
+;;          ("mailbox-type" . imap)                ; 'pop or 'mbox
+;;          ("fcc" . "+inbox")
+;;          )
+;; ;;         ("pop"
+;; ;;          ("name" . "junnon6") ;; (user-full-name)
+;; ;;          ("user" . "xxx") ;; (user-login-name)
+;; ;;          ("mail-domain" . "xxx.jp")
+;; ;;          ("prog-ssl" . "/usr/sbin/stunnel")
+;; ;;          ("ssl-verify-level" . 2)
+;; ;;          ("smtp-ssl" . t)
+;; ;;          ("smtp-server" . "xxx.jp")
+;; ;;          ("smtp-ssl-port" . "465")              ; "SMTP over SSL/TLS" or 587
+;; ;;          ("use-smtp-auth" . t)
+;; ;;          ("smtp-auth-list" . ("CRAM-MD5" "DIGEST-MD5" "PLAIN" "LOGIN"))
+;; ;;          ("smtp-user" . "xxx")
+;; ;;          ("pop-ssl" . t)
+;; ;;          ("pop-server" . "xxx.jp")  ;; if not localhost
+;; ;;          ("pop-ssl-port" . "995")               ; "POP over SSL/TLS"
+;; ;;          ("pop-user" . "xxx")   ;; (user-login-name)
+;; ;;          ("pop-auth" . pass)            ; 'apop, 'pass, or t
+;; ;;          ("pop-delete" . nil)
+;; ;; ;        ("pop-size" . 0)               ; (* 54 1024)
+;; ;; ;        ("pop-header-only" . t)
+;; ;;          ("mailbox-type" . pop)         ; 'pop or 'mbox
+;; ;;          ("fcc" . "+inbox")
+;; ;;          )
+;; ;;         ("xxxx" ; とある普通にpopの話せるプロバイダー
+;; ;;          ("name" . "junnon6")
+;; ;;          ("user" . "xxx")
+;; ;;          ("mail-domain" . "xxx.jp")
+;; ;;          ("smtp-server" . "xxx.jp")
+;; ;;          ("use-smtp-auth" . nil)
+;; ;;          ("pop-server" . "xxx.jp")
+;; ;;          ("pop-user" . "xxx")
+;; ;;          ("pop-auth" . pass)            ; 'apop, 'pass, or t
+;; ;;          ("pop-delete" . nil)
+;; ;; ;        ("pop-size" . 0)               ; (* 54 1024)
+;; ;; ;        ("pop-header-only" . t)
+;; ;;          ("mailbox-type" . pop)         ; 'pop or 'mbox
+;; ;;          )
+;;         ))
+
+

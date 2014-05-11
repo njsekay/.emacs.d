@@ -1,0 +1,41 @@
+(require 'emms-setup)
+
+(emms-standard)
+;; (emms-default-players)
+
+(setq emms-repeat-playlist t)
+;; (setq emms-player-list '(emms-player-mplayer))
+;; (setq emms-source-file-default-directory "/treasure/music/")
+
+(require 'emms-player-mpd)
+(setq emms-player-mpd-server-name "localhost")
+(setq emms-player-mpd-server-port "6600")
+(setq emms-player-mpd-music-directory "/treasure/music")
+
+(add-to-list 'emms-info-functions 'emms-info-mpd)
+(add-to-list 'emms-player-list 'emms-player-mpd)
+(setq emms-playlist-buffer-name "mpd")
+
+;(shell-command "mpd &")
+(emms-player-mpd-connect)
+
+(require 'emms-mode-line)
+(emms-mode-line-enable)
+(setq emms-mode-line-format "---- ♬ %s ")
+
+(define-key global-map "\C-cS" 'emms-stop)
+(define-key global-map "\C-cP" 'emms-start)
+
+(define-key emms-playlist-mode-map ">" 'emms-volume-raise)
+(define-key emms-playlist-mode-map "<" 'emms-volume-lower)
+(define-key emms-playlist-mode-map "\M-o" 'emms-play-directory-tree)
+(define-key emms-playlist-mode-map "a" 'emms-add-file)
+
+
+;; ;;; Add music file to playlist on '!', --lgfang
+;; (add-to-list 'dired-guess-shell-alist-user
+;;              (list "\\.\\(flac\\|mp3\\|ogg\\|wav\\)\\'"
+;;                    '(if (y-or-n-p "Add to emms playlist?")
+;;                         (progn (emms-add-file (dired-get-filename))
+;;                                (keyboard-quit))
+;;                       "mplayer")))

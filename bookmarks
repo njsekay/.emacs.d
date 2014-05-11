@@ -1,0 +1,15 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("/ftp:mw2pp2rl31@sys-square.co.jp:/www/htdocs/bak"
+ (filename . "/ftp:mw2pp2rl31@sys-square.co.jp:/www/htdocs/bak/")
+ (front-context-string . "index.html\n  drw")
+ (rear-context-string . "82 Apr 19 07:54 ")
+ (position . 1905))
+("org-capture-last-stored"
+ (filename . "~/memo/agenda.org")
+ (front-context-string . "** git で端末に出力される")
+ (rear-context-string . " <2013-09-11 水>\n")
+ (position . 2393))
+)
